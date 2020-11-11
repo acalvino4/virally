@@ -29,4 +29,9 @@ SQLALCHEMY_DATABASE_URI='sqlite:///my_app.db'
 SECRET_KEY='MY_SECRET_KEY'
 ```
 
-4. Run `pipenv run dev`
+4. Run this script
+```bash
+pipenv run migrate # generate database ddl
+pipenv run upgrade # execute migrations
+pipenv run dev     # start the flask dev server
+```
