@@ -7,3 +7,4 @@ On a small note, I also used a native css variable for the first time here.
 Some other interesting features that I worked though are
 * implementing a many-to-many self-referential database relationship in SQLAlchemy
 * dealing with all data exchange through form submission rather than ajax
+* rerouting after login or a post request based on a 'next' url query parameter
