@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for user in users %}
+  <div class='content-area'>
+    <h2>{{ user.full_name }}</h2>
+    <h4><a href='/profile/{{ user.username }}'>View Profile</a></h4>
+    {% if user.id in followee_ids %}
+      <form method='get' action='/following/{{ user.id }}?next=%2Fpeople'>
+        <button type='submit'>Unfollow</button>
+      </form>
+    {% else %}
+      <form method='post' action='/following/{{ user.id }}?next=%2Fpeople'>
+        <button type='submit'>Follow</button>
+      </form>
+    {% endif %}
+  </div>
+{% endfor %}
+{% endblock %}

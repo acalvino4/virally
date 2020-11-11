@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ user.full_name }}</h2>
+{% if user==current_user %}
+<h3>Create a viral post, or browse your old posts!</h3>
+<form method='post' action='/post?next=%2Fprofile' class='content-area'>
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.title.label }}<br>
+    {{ form.title(size=32) }}<br>
+    {% for error in form.title.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    {{ form.content.label }}<br>
+    {{ form.content() }}<br>
+    {% for error in form.content.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>{{ form.submit() }}</p>
+</form>
+{% else %}
+{% if user.id in follow_ids %}
+  <form method='delete' action='/following/{{ user.id }}?next=%2Fpeople'>
+    <button type='submit'>Unfollow</button>
+  </form>
+{% else %}
+  <form method='post' action='/following/{{ user.id }}?next=%2Fpeople'>
+    <button type='submit'>Follow</button>
+  </form>
+{% endif %}
+<h3>Browse this user's posts!</h3>
+{% endif %}
+<div class='content-area'>
+  {% if posts %}
+    {% for post in posts %}
+      <div class='content-area'>
+        <h2>{{ post.title }}</h2>
+        <p><em>{{ post.posted_at }}</em></p>
+        <p>{{ post.content }}</p>
+        {% if user==current_user %}
+          <form method='post' action='/post/{{ post.id }}?next=%2Fprofile'>
+            <button type='submit'>Delete Post</button>
+          </form>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    {% if user==current_user %}
+    <p>Oh no, looks like you have yet to post anything! Create a post above so the world can be infected with your idea!</a></p>
+    {% else %}
+    <p>This user has yet to produce any contagious ideas! You should nag them to do so!</p>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+:root {
+  --theme-color: rgb(185, 0, 0);
+}
+
+.navbar {
+  background-color: var(--theme-color);
+}
+
+.content-area {
+  margin: 8px;
+  padding: 8px;
+  border: solid var(--theme-color) 1px;
+}

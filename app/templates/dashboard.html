@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>User Dashboard</h1>
+<h3>Create a viral post, or explore your friend's posts!</h3>
+<form method='post' action='/post?next=%2Fdashboard' class='content-area'>
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.title.label }}<br>
+    {{ form.title(size=32) }}<br>
+    {% for error in form.title.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    {{ form.content.label }}<br>
+    {{ form.content() }}<br>
+    {% for error in form.content.errors %}
+    <span style="color: red;">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>{{ form.submit() }}</p>
+</form>
+<div class='content-area'>
+  {% if posts %}
+    {% for post in posts %}
+      <div class='content-area'>
+        <h2>{{ post.title }}</h2>
+        <h4>{{ post.author.full_name }}</h4>
+        <p><em>{{ post.posted_at }}</em></p>
+        <p>{{ post.content }}</p>
+        </h2>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>Oh no, looks like there are no viral threads going around! <a href='/people'>Find some people to follow</a> to populate your news feed.</p>
+  {% endif %}
+</div>
+{% endblock %}
