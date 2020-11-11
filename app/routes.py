@@ -75,7 +75,8 @@ def profile(username=''):
   user = User.query.filter_by(username=username).first_or_404()
   posts = Post.query.filter_by(author_id=user.id).order_by(Post.posted_at.desc()).limit(10).all()
   form = PostForm()
-  return render_template('profile.html', user=user, posts=posts, form=form)
+  followee_ids = [followee.id for followee in current_user.followees]
+  return render_template('profile.html', user=user, posts=posts, form=form, followee_ids=followee_ids)
 
 @app.route('/people')
 @login_required
@@ -137,6 +138,7 @@ def following(user_id):
   else:
     flash('No such user exists')
   next = request.args.get('next')
+  print(next)
   if next and not is_safe_url(next, {app.config.get('SERVER_NAME')}):
     return abort(400)
   return redirect(next or url_for('people'))

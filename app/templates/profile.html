@@ -22,12 +22,12 @@
   <p>{{ form.submit() }}</p>
 </form>
 {% else %}
-{% if user.id in follow_ids %}
-  <form method='delete' action='/following/{{ user.id }}?next=%2Fpeople'>
+{% if user.id in followee_ids %}
+  <form method='get' action='/following/{{ user.id }}?next=%2Fprofile/{{ user.username }}'>
     <button type='submit'>Unfollow</button>
   </form>
 {% else %}
-  <form method='post' action='/following/{{ user.id }}?next=%2Fpeople'>
+  <form method='post' action='/following/{{ user.id }}?next=%2Fprofile/{{ user.username }}'>
     <button type='submit'>Follow</button>
   </form>
 {% endif %}
