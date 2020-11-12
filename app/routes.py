@@ -61,9 +61,7 @@ def dashboard(username=''):
     abort(401)
   form = PostForm()
   followee_ids = [followee.id for followee in current_user.followees]
-  print(followee_ids)
   posts = Post.query.filter(Post.author_id.in_(followee_ids)).order_by(Post.posted_at.desc()).limit(10).all()
-  print(posts)
   return render_template('dashboard.html', form=form, posts=posts)
 
 @app.route('/profile/')
@@ -138,7 +136,6 @@ def following(user_id):
   else:
     flash('No such user exists')
   next = request.args.get('next')
-  print(next)
   if next and not is_safe_url(next, {app.config.get('SERVER_NAME')}):
     return abort(400)
   return redirect(next or url_for('people'))
